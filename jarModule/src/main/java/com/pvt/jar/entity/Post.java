@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -30,10 +32,12 @@ public class Post implements Serializable {
     @Column(name = "text",nullable = false)
     private String text;
 
-    @Column(name = "createDate", nullable = false)
+    @CreationTimestamp
+    @Column()
     private Date createDate;
 
-    @Column(name = "updateDate", nullable = false)
+    @UpdateTimestamp
+    @Column()
     private Date updateDate;
 
     @Lob

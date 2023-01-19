@@ -10,4 +10,6 @@ public interface PostService extends IService<Post,Long> {
 
     public Post getByName(String name);
 
+    List<Post> findMyPost(long idUser);
+
 }

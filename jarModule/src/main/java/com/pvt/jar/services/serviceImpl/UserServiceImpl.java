@@ -43,7 +43,6 @@ public class UserServiceImpl extends BaseService<User,Long> implements UserServi
     public void add(User user) throws LogicException {
 
         User userCheck;
-        user.setRole("user");
 
 
         userCheck = getByEmail(user.getEmail());

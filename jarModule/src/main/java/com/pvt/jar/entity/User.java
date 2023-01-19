@@ -4,8 +4,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -34,6 +37,14 @@ public class User implements Serializable {
     @Lob
     @Column(name = "image")
     private byte[] image;
+
+    @CreationTimestamp
+    @Column()
+    private Date createDate;
+
+    @UpdateTimestamp
+    @Column()
+    private Date updateDate;
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL})
     private Set <Post> posts=new HashSet<>();

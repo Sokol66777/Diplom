@@ -30,12 +30,16 @@ public class PostServiceImpl extends BaseService<Post,Long> implements PostServi
         return postRepositoryService.findByName(name).orElse(null);
     }
 
+    @Override
+    public List<Post> findMyPost(long idUser) {
+
+        return postRepositoryService.findMyPost(idUser);
+    }
+
     @Transactional
     @Override
     public void add(Post post) throws LogicException {
 
-        post.setCreateDate(new Date());
-        post.setUpdateDate(new Date());
         postRepositoryService.save(post);
     }
 
@@ -43,9 +47,10 @@ public class PostServiceImpl extends BaseService<Post,Long> implements PostServi
     @Transactional
     public void modify(Post post) throws LogicException{
 
-        post.setUpdateDate(new Date());
         postRepositoryService.save(post);
     }
+
+
 
 
 }

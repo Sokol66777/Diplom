@@ -34,8 +34,7 @@ public class CommentServiceImpl extends BaseService<Comment,Long> implements Com
     @Override
     public void add(Comment comment) throws LogicException {
 
-        comment.setCreateDate(new Date());
-        comment.setUpdateDate(new Date());
+
         commentRepositoryService.save(comment);
     }
 
@@ -43,7 +42,6 @@ public class CommentServiceImpl extends BaseService<Comment,Long> implements Com
     @Transactional
     public void modify(Comment comment) throws LogicException{
 
-        comment.setUpdateDate(new Date());
         commentRepositoryService.save(comment);
     }
 
