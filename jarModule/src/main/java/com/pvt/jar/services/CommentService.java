@@ -9,4 +9,6 @@ public interface CommentService extends IService<Comment,Long>{
     public List<Comment> getAll();
 
     public Comment getByName(String name);
+
+    List<Comment> findByIdPost(long idPost);
 }

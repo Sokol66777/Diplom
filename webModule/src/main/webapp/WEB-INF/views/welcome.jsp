@@ -11,7 +11,7 @@
     <p><c:out value="${errorMassage}"/></p>
     <p>Welcome,
        <c:out value="${user.username}"/></p>
-       <p><img src="${pageContext.request.contextPath}/user/imageOnWelcomePage" width="100"/></p>
+       <p><img src="${pageContext.request.contextPath}/user/imageOnWelcomePage?idUser=${user.id}" width="100"/></p>
 
     <security:authorize access = "hasRole('ROLE_admin')">
 
@@ -45,13 +45,13 @@
             </tr>
             <tr>
                 <td></td>
-                <td><c:out value = "${post.text}"/> <br></br> </td>
+                <td><c:out value = "${post.text}"/> </td>
+            </tr>
+            <tr>
+                <td><a href="/comment/commentsOfPost?idPost=${post.id}">comments</a> <br></br></td>
             </tr>
         </c:forEach>
     </table>
-
-
-
 
 </body>
 </html>

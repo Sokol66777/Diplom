@@ -25,8 +25,6 @@ public class LoginController {
     @Autowired
     UserFasad userFasad;
 
-    @Autowired
-    EmailService emailService;
 
     @Autowired
     PostFasad postFasad;

@@ -28,9 +28,19 @@ public class PostController {
     @GetMapping("/myPosts")
     public ModelAndView myPosts(@ModelAttribute("idUserPost") long idUser){
 
-        List<PostForm> postForms = postFasad.findMyPosts(idUser);
+        List<PostForm> postForms = postFasad.findPostsByIdUser(idUser);
         ModelAndView modelAndView = new ModelAndView("loggedUserPost");
         modelAndView.addObject("myPosts",postForms);
+        return modelAndView;
+    }
+
+    @GetMapping("/postsOfFriend")
+    public ModelAndView postsOfFriend(@RequestParam("idFriendUser") long idFriendUser){
+
+        List<PostForm> postForms = postFasad.findPostsByIdUser(idFriendUser);
+        ModelAndView modelAndView = new ModelAndView("postsOfFriend");
+        modelAndView.addObject("postsOfFriend",postForms);
+        modelAndView.addObject("usernameOfFriend",userFasad.get(idFriendUser).getUsername());
         return modelAndView;
     }
 
@@ -72,11 +82,17 @@ public class PostController {
     @GetMapping(value = {"/delete"})
     public void deletePost(@RequestParam(value = "idPost") long idPost,
                            HttpServletResponse response, HttpServletRequest request) throws IOException {
-
+        PostForm postForm = postFasad.get(idPost);
         postFasad.delete(idPost);
         UserForm userForm = (UserForm) request.getSession().getAttribute("user");
-        response.sendRedirect(request.getContextPath()+"/post/myPosts?idUserPost="+userForm.getId());
+
+        if(postForm.getIdUser()==userForm.getId()) {
+            response.sendRedirect(request.getContextPath() + "/post/myPosts?idUserPost=" + userForm.getId());
+        }else{
+            response.sendRedirect(request.getContextPath() + "/post/postsOfFriend?idFriendUser=" + postForm.getIdUser());
+        }
     }
+
 
     @PostMapping(value = {"/uploadPhoto"})
     public ModelAndView uploadPhoto(@ModelAttribute("addPostImageForm") PostForm imageForm,

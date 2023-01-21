@@ -161,8 +161,9 @@ public class UserController {
     }
 
     @GetMapping(value = {"/imageOnWelcomePage"})
-    public void imageOnWelcomePage(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        UserForm userForm = (UserForm) request.getSession().getAttribute("user");
+    public void imageOnWelcomePage(@RequestParam("idUser") long idUser, HttpServletRequest request,
+                                   HttpServletResponse response) throws IOException {
+        UserForm userForm = userFasad.get(idUser);
         if (userForm.getImage() != null) {
 
             response.setContentType("img/jpg");

@@ -10,7 +10,7 @@ public interface PostService extends IService<Post,Long> {
 
     public Post getByName(String name);
 
-    List<Post> findMyPost(long idUser);
+    List<Post> findPostsByIdUser(long idUser);
 
     List<Post> findAllOrderByCreateDateDesc();
 

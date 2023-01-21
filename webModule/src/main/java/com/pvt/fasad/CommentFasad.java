@@ -9,6 +9,9 @@ import com.pvt.jar.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class CommentFasad {
 
@@ -52,5 +55,16 @@ public class CommentFasad {
 
         Comment comment = buildComment(commentForm);
         commentService.modify(comment);
+    }
+
+    public List<CommentForm> findByIdPost(long idPost){
+
+        List<Comment> comments = commentService.findByIdPost(idPost);
+        List<CommentForm> commentForms = new ArrayList<>();
+
+        for(Comment comment:comments){
+            commentForms.add(new CommentForm(comment));
+        }
+        return commentForms;
     }
 }

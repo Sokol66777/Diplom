@@ -31,9 +31,9 @@ public class PostServiceImpl extends BaseService<Post,Long> implements PostServi
     }
 
     @Override
-    public List<Post> findMyPost(long idUser) {
+    public List<Post> findPostsByIdUser(long idUser) {
 
-        return postRepositoryService.findMyPost(idUser);
+        return postRepositoryService.findPostsByIdUser(idUser);
     }
 
     @Override

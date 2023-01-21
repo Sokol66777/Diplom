@@ -68,10 +68,10 @@ public class PostFasad {
         postService.modify(buildPost(postForm));
     }
 
-    public List<PostForm> findMyPosts(long idUser){
+    public List<PostForm> findPostsByIdUser(long idUser){
 
         List<PostForm> postForms = new ArrayList<>();
-        List<Post> posts = postService.findMyPost(idUser);
+        List<Post> posts = postService.findPostsByIdUser(idUser);
 
         for(Post post: posts){
             postForms.add(new PostForm(post));

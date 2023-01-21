@@ -30,6 +30,12 @@ public class CommentServiceImpl extends BaseService<Comment,Long> implements Com
         return commentRepositoryService.findByName(name).orElse(null);
     }
 
+    @Override
+    public List<Comment> findByIdPost(long idPost) {
+
+        return commentRepositoryService.findByIdPost(idPost);
+    }
+
     @Transactional
     @Override
     public void add(Comment comment) throws LogicException {
