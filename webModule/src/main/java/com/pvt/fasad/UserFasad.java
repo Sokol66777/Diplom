@@ -97,8 +97,16 @@ public class UserFasad {
     }
 
     public UserForm getByUsername(String username){
+
+        UserForm userForm;
         User user = userService.getByUsername(username);
-        UserForm userForm = new UserForm(user);
+
+        if(user!=null) {
+            userForm = new UserForm(user);
+        }else {
+            userForm=null;
+        }
+
         return userForm;
     }
 

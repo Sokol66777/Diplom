@@ -6,5 +6,7 @@
 <body>
     <button onclick = "location.href='${pageContext.request.contextPath}/login'">Login </button>
 	<button onclick = "location.href='${pageContext.request.contextPath}/addUser'">Add user </button>
+	<button onclick = "location.href='${pageContext.request.contextPath}/resetPassword'">Forgot password </button>
+
 </body>
 </html>

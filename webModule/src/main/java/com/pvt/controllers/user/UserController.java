@@ -1,16 +1,15 @@
 package com.pvt.controllers.user;
 
+import com.pvt.fasad.PostFasad;
 import com.pvt.fasad.UserFasad;
+import com.pvt.forms.PostForm;
 import com.pvt.forms.UserForm;
 import com.pvt.jar.exceptions.LogicException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
@@ -25,10 +24,15 @@ public class UserController {
     @Autowired
     UserFasad userFasad;
 
+    @Autowired
+    PostFasad postFasad;
+
     @GetMapping("/welcome")
     public ModelAndView welcome(){
 
+        List<PostForm> allPosts = postFasad.findAllOrderByCreateDateDesc();
         ModelAndView modelAndView = new ModelAndView("welcome");
+        modelAndView.addObject("allPosts",allPosts);
         return modelAndView;
     }
 
@@ -87,6 +91,7 @@ public class UserController {
 
         if(imageForm!=null){
             user.setImage(imageForm.getImage());
+            request.getSession().removeAttribute("imageForm");
         }
         user.setEmail(updateUserForm.getNewEmail());
         user.setUsername(updateUserForm.getNewUsername());
@@ -114,6 +119,16 @@ public class UserController {
         }
 
         return modelAndView ;
+    }
+
+    @GetMapping("/friendUser")
+    public ModelAndView sendToFriendUserPage(@RequestParam("idFriendUser") long idFriendUser){
+
+        UserForm friendUserForm = userFasad.get(idFriendUser);
+        ModelAndView modelAndView = new ModelAndView("friendUser");
+        modelAndView.addObject("friendUser",friendUserForm);
+        return modelAndView;
+
     }
 
     @PostMapping(value = {"/uploadPhoto"})

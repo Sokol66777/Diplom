@@ -48,6 +48,7 @@ public class RegistrationController {
             try {
                 if(imageForm!=null){
                     registrationForm.setImage(imageForm.getImage());
+                    request.getSession().removeAttribute("imageForm");
                 }
                 userFasad.addUser(registrationForm);
                 response.sendRedirect("/user/welcome");

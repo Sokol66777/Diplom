@@ -6,7 +6,8 @@
     </head>
     <body>
         <p><c:out value="${errorMassage}"/></p>
-        <form action="addPost" method="post">
+        <p><c:out value="${message}"/></p>
+        <form action="${pageContext.request.contextPath}/post/add" method="post">
         	<table>
     			<tr>
         			<td>Name Post</td>

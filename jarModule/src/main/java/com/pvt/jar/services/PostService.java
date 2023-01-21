@@ -12,4 +12,6 @@ public interface PostService extends IService<Post,Long> {
 
     List<Post> findMyPost(long idUser);
 
+    List<Post> findAllOrderByCreateDateDesc();
+
 }

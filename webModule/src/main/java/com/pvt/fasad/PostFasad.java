@@ -79,4 +79,26 @@ public class PostFasad {
 
         return postForms;
     }
+
+    public List<PostForm> findAll(){
+
+        List<PostForm> postForms = new ArrayList<>();
+        List<Post> posts = postService.getAll();
+
+        for(Post post: posts){
+            postForms.add(new PostForm(post));
+        }
+        return postForms;
+    }
+
+    public List<PostForm> findAllOrderByCreateDateDesc(){
+
+        List<PostForm> postForms = new ArrayList<>();
+        List<Post> posts = postService.findAllOrderByCreateDateDesc();
+
+        for(Post post: posts){
+            postForms.add(new PostForm(post));
+        }
+        return postForms;
+    }
 }

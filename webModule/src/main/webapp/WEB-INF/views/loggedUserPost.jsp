@@ -10,15 +10,20 @@
     <body>
         <table>
             <c:forEach var="post" items = "${myPosts}">
-                <tr>
-                    <td><c:out value = "${post.name}"/></td>
-                    <td><button onclick = "location.href='${pageContext.request.contextPath}/post/deletePost?idPost=${post.id}'">Delete post</button><td>
-                    <td><button onclick = "location.href='${pageContext.request.contextPath}/post/update?idPost=${post.id}'">Update post</button><td>
-                </tr>
-                <tr>
-                    <td><c:out value = "${post.text}"/></td>
-                </tr>
-                <p></p>
+                    <tr>
+                        <td><c:out value = "${post.name}"/></td>
+
+                        <td><button onclick = "location.href='${pageContext.request.contextPath}/post/delete?idPost=${post.id}'">Delete post</button><td>
+                        <td><button onclick = "location.href='${pageContext.request.contextPath}/post/update?idPost=${post.id}'">Update post</button><td>
+                    </tr>
+                    <tr>
+                        <td><c:if test="${not empty post.image }">
+                            <p><img src="${pageContext.request.contextPath}/post/viewPostImage?idPost=${post.id}" width="100"/></p>
+                        </c:if></td>
+                    </tr>
+                    <tr>
+                        <td><c:out value = "${post.text}"/> <br></br> </td>
+                    </tr>
             </c:forEach>
         </table>
         <button onclick = "location.href='${pageContext.request.contextPath}/user/welcome'">welcome</button>

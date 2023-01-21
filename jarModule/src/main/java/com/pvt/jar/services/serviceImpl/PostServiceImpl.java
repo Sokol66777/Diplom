@@ -36,6 +36,12 @@ public class PostServiceImpl extends BaseService<Post,Long> implements PostServi
         return postRepositoryService.findMyPost(idUser);
     }
 
+    @Override
+    public List<Post> findAllOrderByCreateDateDesc() {
+
+        return postRepositoryService.findAllOrderByCreateDateDesc();
+    }
+
     @Transactional
     @Override
     public void add(Post post) throws LogicException {

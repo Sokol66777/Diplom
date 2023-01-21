@@ -23,6 +23,7 @@ public class PostForm {
     private long idUser;
     private MultipartFile fileData;
     private byte[] image;
+    private String username;
     private Set<CommentForm> comments = new HashSet<>();
 
     public PostForm(Post post){
@@ -32,6 +33,7 @@ public class PostForm {
         this.text= post.getText();
         this.idUser=post.getUser().getID();
         this.image= post.getImage();
+        this.username=post.getUser().getUsername();
         try{
             for(Comment comment : post.getComments()){
                 CommentForm commentForm = new CommentForm(comment);

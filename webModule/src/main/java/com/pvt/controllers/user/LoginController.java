@@ -2,7 +2,9 @@ package com.pvt.controllers.user;
 
 
 import com.pvt.fasad.EmailService;
+import com.pvt.fasad.PostFasad;
 import com.pvt.fasad.UserFasad;
+import com.pvt.forms.PostForm;
 import com.pvt.forms.UserForm;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class LoginController {
@@ -24,6 +27,9 @@ public class LoginController {
 
     @Autowired
     EmailService emailService;
+
+    @Autowired
+    PostFasad postFasad;
 
     @RequestMapping(value = {"/"})
     public ModelAndView startApp(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -40,19 +46,14 @@ public class LoginController {
 
 
         user=userFasad.getByUsername(loginForm.getUsername());
-
+        List<PostForm> allPosts = postFasad.findAllOrderByCreateDateDesc();
 
         modelAndView = new ModelAndView("welcome");
-
-        if(user.getImage()!=null){
-
-            request.getSession().setAttribute("imageForm",user);
-        }
+        modelAndView.addObject("allPosts",allPosts);
 
         request.getSession().setAttribute("user", user);
 
 
-        emailService.sendEmail("Sokol66777@mail.ru", user.getEmail(), "login", "user "+user.getUsername()+" login in APP");
         return modelAndView;
     }
 
