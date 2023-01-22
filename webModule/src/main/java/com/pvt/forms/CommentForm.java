@@ -3,6 +3,8 @@ package com.pvt.forms;
 import com.pvt.jar.entity.Comment;
 import lombok.*;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,9 +14,12 @@ public class CommentForm {
 
     private long id;
     private String name;
+    private String username;
     private String text;
     private long idUser;
     private long idPost;
+    private Date createDate;
+
 
     public CommentForm(Comment comment){
         this.id=comment.getID();
@@ -22,6 +27,8 @@ public class CommentForm {
         this.text= comment.getText();
         this.idUser=comment.getUser().getID();
         this.idPost=comment.getPost().getID();
+        this.username=comment.getUser().getUsername();
+        this.createDate=comment.getCreateDate();
     }
 
 }

@@ -7,14 +7,15 @@ import lombok.*;
 import org.hibernate.LazyInitializationException;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@EqualsAndHashCode
+@ToString(exclude = {"comments"})
+@EqualsAndHashCode(exclude = {"comments"})
 public class PostForm {
 
     private long id;
@@ -24,7 +25,9 @@ public class PostForm {
     private MultipartFile fileData;
     private byte[] image;
     private String username;
+    private Date createDate;
     private Set<CommentForm> comments = new HashSet<>();
+
 
     public PostForm(Post post){
 
@@ -34,6 +37,7 @@ public class PostForm {
         this.idUser=post.getUser().getID();
         this.image= post.getImage();
         this.username=post.getUser().getUsername();
+        this.createDate=post.getCreateDate();
         try{
             for(Comment comment : post.getComments()){
                 CommentForm commentForm = new CommentForm(comment);

@@ -20,6 +20,8 @@
             <td><c:out value = "${post.text}"/> <br></br> </td>
         </tr>
      </table>
+     <button onclick = "location.href='${pageContext.request.contextPath}/user/welcome'">welcome</button>
+
 
      <h2>Comments</h2>
 
@@ -37,3 +39,25 @@
             </tr>
         </table>
      </form>
+
+
+
+    <table>
+        <c:forEach var="comment" items = "${comments}">
+            <tr>
+                <td><a href="/user/friendUser?idFriendUser=${comment.idUser}"><c:out value="${comment.username}"/></a></td>
+
+                <td><c:if test="${comment.idUser==user.id or user.role=='admin'}">
+                    <button onclick = "location.href='${pageContext.request.contextPath}/comment/delete?idComment=${comment.id}&idPost=${comment.idPost}'">delete</button>
+                </c:if></td>
+
+                <td><c:if test="${comment.idUser==user.id}">
+                    <button onclick = "location.href='${pageContext.request.contextPath}/comment/update?idComment=${comment.id}'">update</button>
+                </c:if></td>
+
+            </tr>
+            <tr>
+                <td><c:out value = "${comment.text}"/> <br></br></td>
+            </tr>
+        </c:forEach>
+    </table>

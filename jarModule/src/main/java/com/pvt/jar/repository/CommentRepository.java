@@ -10,6 +10,6 @@ public interface CommentRepository extends BaseRepository<Comment,Long>{
 
     Optional<Comment> findByName(String name);
 
-    @Query("select c from Comment as c where c.post.id=?1")
+    @Query("select c from Comment as c where c.post.id=?1 order by c.createDate Desc")
     List<Comment> findByIdPost(long idPost);
 }

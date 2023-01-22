@@ -32,6 +32,7 @@ public class CommentFasad {
         comment.setText(commentForm.getText());
         comment.setUser(userService.get(commentForm.getIdUser()));
         comment.setPost(postService.get(commentForm.getIdPost()));
+        comment.setCreateDate(commentForm.getCreateDate());
         return comment;
     }
 

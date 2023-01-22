@@ -31,8 +31,9 @@
 
     <br></br><h2><p>New posts</p></h2>
 
+<c:forEach var="post" items = "${allPosts}">
     <table>
-        <c:forEach var="post" items = "${allPosts}">
+
             <tr>
                 <td><a href="/user/friendUser?idFriendUser=${post.idUser}"><c:out value="${post.username}"/></a></td>
                 <td><c:out value = "${post.name}"/></td>
@@ -48,10 +49,11 @@
                 <td><c:out value = "${post.text}"/> </td>
             </tr>
             <tr>
-                <td><a href="/comment/commentsOfPost?idPost=${post.id}">comments</a> <br></br></td>
+                <td><a href="/comment/commentsOfPost?idPost=${post.id}">comments</a> <br><br></td>
             </tr>
-        </c:forEach>
+
     </table>
+</c:forEach>
 
 </body>
 </html>

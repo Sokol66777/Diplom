@@ -22,7 +22,10 @@
                         </c:if></td>
                     </tr>
                     <tr>
-                        <td><c:out value = "${post.text}"/> <br></br> </td>
+                        <td><c:out value = "${post.text}"/></td>
+                    </tr>
+                    <tr>
+                        <td><a href="/comment/commentsOfPost?idPost=${post.id}">comments</a> <br><br></td>
                     </tr>
             </c:forEach>
         </table>
