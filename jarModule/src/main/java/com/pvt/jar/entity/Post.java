@@ -48,7 +48,7 @@ public class Post implements Serializable {
     @JoinColumn(name = "user_ID")
     private User user;
 
-    @OneToMany(mappedBy = "post", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "post", cascade = {CascadeType.REMOVE})
     private Set<Comment> comments= new HashSet<>();
 
     @Override
