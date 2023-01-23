@@ -122,7 +122,14 @@ public class UserController {
     }
 
     @GetMapping("/friendUser")
-    public ModelAndView sendToFriendUserPage(@RequestParam("idFriendUser") long idFriendUser){
+    public ModelAndView sendToFriendUserPage(@RequestParam("idFriendUser") long idFriendUser, HttpServletRequest request,
+                                             HttpServletResponse response) throws IOException {
+
+        UserForm loggedUser = (UserForm) request.getSession().getAttribute("user");
+
+        if(loggedUser.getId()==idFriendUser){
+            response.sendRedirect(request.getContextPath()+"/user/welcome");
+        }
 
         UserForm friendUserForm = userFasad.get(idFriendUser);
         ModelAndView modelAndView = new ModelAndView("friendUser");
@@ -136,8 +143,13 @@ public class UserController {
 
         ModelAndView modelAndView;
         UserForm userForm = (UserForm)request.getSession().getAttribute("user");
-        imageForm.setImage(imageForm.getFileData().getBytes());
-        request.getSession().setAttribute("imageForm",imageForm);
+        String filename=imageForm.getFileData().getOriginalFilename();
+
+        if(!filename.equals("")){
+            imageForm.setImage(imageForm.getFileData().getBytes());
+            request.getSession().setAttribute("imageForm",imageForm);
+        }
+
         if(userForm!=null){
             modelAndView = new ModelAndView("updateUser");
             modelAndView.addObject("updateUserForm",userForm);
@@ -146,6 +158,11 @@ public class UserController {
             modelAndView = new ModelAndView("addUser");
             modelAndView.addObject("registrationForm",userForm);
         }
+
+        if(!filename.equals("")){
+            modelAndView.addObject("message", "file is loaded");
+        }
+
         return modelAndView;
     }
 

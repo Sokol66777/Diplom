@@ -11,15 +11,10 @@
     <p><c:out value="${errorMassage}"/></p>
     <p>Welcome,
        <c:out value="${user.username}"/></p>
-       <p><img src="${pageContext.request.contextPath}/user/imageOnWelcomePage?idUser=${user.id}" width="100"/></p>
+       <c:if test="${not empty user.image }">
+            <p><img src="${pageContext.request.contextPath}/user/imageOnWelcomePage?idUser=${user.id}" width="100"/></p>
+       </c:if>
 
-    <security:authorize access = "hasRole('ROLE_admin')">
-
-    </security:authorize>
-
-    <security:authorize access = "hasRole('ROLE_user')">
-
-    </security:authorize>
     <p></p>
     <button onclick = "location.href='${pageContext.request.contextPath}/user/logout'"> logout </button>
     <button onclick = "location.href='${pageContext.request.contextPath}/user/update?updateUsersID=${user.id}'">Update</button>
@@ -32,27 +27,28 @@
     <br></br><h2><p>New posts</p></h2>
 
 <c:forEach var="post" items = "${allPosts}">
-    <table>
+    <c:if test="${post.hide=='false'}">
+        <table>
 
-            <tr>
-                <td><a href="/user/friendUser?idFriendUser=${post.idUser}"><c:out value="${post.username}"/></a></td>
-                <td><c:out value = "${post.name}"/></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><c:if test="${not empty post.image }">
-                    <p><img src="${pageContext.request.contextPath}/post/viewPostImage?idPost=${post.id}" width="100"/></p>
-                </c:if></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><c:out value = "${post.text}"/> </td>
-            </tr>
-            <tr>
-                <td><a href="/comment/commentsOfPost?idPost=${post.id}">comments</a> <br><br></td>
-            </tr>
-
-    </table>
+                <tr>
+                    <td><a href="/user/friendUser?idFriendUser=${post.idUser}"><c:out value="${post.username}"/></a></td>
+                    <td><c:out value = "${post.name}"/></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><c:if test="${not empty post.image }">
+                        <p><img src="${pageContext.request.contextPath}/post/viewPostImage?idPost=${post.id}" width="100"/></p>
+                    </c:if></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><c:out value = "${post.text}"/> </td>
+                </tr>
+                <tr>
+                    <td><a href="/comment/commentsOfPost?idPost=${post.id}">comments</a> <br><br></td>
+                </tr>
+        </table>
+    </c:if>
 </c:forEach>
 
 </body>

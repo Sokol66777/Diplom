@@ -52,6 +52,22 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL})
     private Set<Comment> comments = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(
+            name = "user_subscriptions",
+            joinColumns = { @JoinColumn(name = "channel_id")},
+            inverseJoinColumns = {@JoinColumn(name="subscriber_id")}
+    )
+    private Set<User> subscribers = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_subscriptions",
+            joinColumns = { @JoinColumn(name = "subscriber_id")},
+            inverseJoinColumns = {@JoinColumn(name="channel_id")}
+    )
+    private Set<User> subscriptions = new HashSet<>();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

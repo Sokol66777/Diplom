@@ -25,6 +25,16 @@
                 <td>Text</td>
                 <td><textarea name = "text" rows = "7" cols ="100" required="required"><c:out value='${updatePostForm.text}'/></textarea></td>
             </tr>
+                <td>
+                    <c:if test="${updatePostForm.hide=='false' }">
+                        <p><input name="hide" type="radio" value="true"> hide</p>
+                        <p><input name="hide" type="radio" value="false" checked> not hide</p>
+                    </c:if>
+                    <c:if test="${updatePostForm.hide=='true' }">
+                        <p><input name="hide" type="radio" value="true" checked> hide</p>
+                        <p><input name="hide" type="radio" value="false"> not hide</p>
+                    </c:if>
+                </td>
         	<tr>
         		<td><input type = "submit" value="Update"/></td>
 			</tr>

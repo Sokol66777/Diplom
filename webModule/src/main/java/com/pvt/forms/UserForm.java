@@ -14,7 +14,6 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"posts","comments"})
 @EqualsAndHashCode(exclude = {"posts","comments"})
 public class UserForm {
 

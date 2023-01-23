@@ -26,6 +26,7 @@ public class PostForm {
     private byte[] image;
     private String username;
     private Date createDate;
+    private boolean hide;
     private Set<CommentForm> comments = new HashSet<>();
 
 
@@ -38,6 +39,7 @@ public class PostForm {
         this.image= post.getImage();
         this.username=post.getUser().getUsername();
         this.createDate=post.getCreateDate();
+        this.hide=post.isHide();
         try{
             for(Comment comment : post.getComments()){
                 CommentForm commentForm = new CommentForm(comment);

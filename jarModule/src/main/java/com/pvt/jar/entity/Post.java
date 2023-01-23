@@ -32,6 +32,9 @@ public class Post implements Serializable {
     @Column(name = "text",nullable = false)
     private String text;
 
+    @Column
+    private boolean hide;
+
     @CreationTimestamp
     @Column()
     private Date createDate;

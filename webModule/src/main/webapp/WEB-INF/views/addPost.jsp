@@ -18,6 +18,12 @@
                     <td><textarea name = "text" rows = "7" cols ="100" required="required"></textarea></td>
                 </tr>
                 <input type = "hidden" name = "idUser" value = "<c:out value = '${user.id}'/>"/>
+                <tr>
+                    <td>
+                        <p><input name="hide" type="radio" value="true"> hide</p>
+                        <p><input name="hide" type="radio" value="false" checked> not hide</p>
+                    </td>
+                </tr>
             	<tr>
             		<td><input type = "submit" value="Add"/></td>
     			</tr>

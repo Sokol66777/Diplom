@@ -33,6 +33,7 @@ public class PostFasad {
         post.setUser(userService.get(postForm.getIdUser()));
         post.setImage(postForm.getImage());
         post.setCreateDate(postForm.getCreateDate());
+        post.setHide(postForm.isHide());
         Set<Comment> comments= new HashSet<>();
         for(CommentForm commentForm: postForm.getComments()){
 

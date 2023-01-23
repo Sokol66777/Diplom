@@ -6,6 +6,7 @@
 </head>
 <body>
     <p><c:out value="${errorMassage}"/></p>
+    <p><c:out value="${message}"/></p>
     <form action="update" method="post">
     	<table>
 			<tr>

@@ -4,3 +4,4 @@
 .idea
 /webModule/target/
 /jarModule/target/
+/webModule/log.txt

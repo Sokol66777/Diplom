@@ -100,23 +100,28 @@ public class PostController {
                                     HttpServletRequest request) throws IOException {
 
         ModelAndView modelAndView;
-        imageForm.setImage(imageForm.getFileData().getBytes());
-        request.getSession().setAttribute("imageForm",imageForm);
+        String filename=imageForm.getFileData().getOriginalFilename();
+
+        if(!filename.equals("")){
+            imageForm.setImage(imageForm.getFileData().getBytes());
+            request.getSession().setAttribute("imageForm",imageForm);
+        }
 
         if(idPost==0){
             PostForm postForm=new PostForm();
             modelAndView = new ModelAndView("addPost");
-            modelAndView.addObject("message", "file is loaded");
             modelAndView.addObject("addPostForm",postForm);
         }else{
 
             PostForm postForm = postFasad.get(idPost);
             modelAndView = new ModelAndView("updatePost");
-            modelAndView.addObject("message", "file is loaded");
             modelAndView.addObject("updatePostForm",postForm);
             modelAndView.addObject("imageForm",imageForm);
         }
 
+        if(!filename.equals("")){
+            modelAndView.addObject("message", "file is loaded");
+        }
 
         return modelAndView;
     }
@@ -153,6 +158,7 @@ public class PostController {
             postForm.setImage(imageForm.getImage());
             request.getSession().removeAttribute("imageForm");
         }
+        postForm.setHide(updatePostForm.isHide());
         postForm.setName(updatePostForm.getName());
         postForm.setText(updatePostForm.getText());
 

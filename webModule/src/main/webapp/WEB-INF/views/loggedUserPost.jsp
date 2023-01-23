@@ -8,6 +8,9 @@
         <h2>My posts</h2>
     </head>
     <body>
+        <button onclick = "location.href='${pageContext.request.contextPath}/user/welcome'">welcome</button>
+        <button onclick = "location.href='${pageContext.request.contextPath}/post/add'">Add post</button>
+
         <table>
             <c:forEach var="post" items = "${myPosts}">
                     <tr>
@@ -29,7 +32,5 @@
                     </tr>
             </c:forEach>
         </table>
-        <button onclick = "location.href='${pageContext.request.contextPath}/user/welcome'">welcome</button>
-        <button onclick = "location.href='${pageContext.request.contextPath}/post/add'">Add post</button>
     </body>
 </html>
