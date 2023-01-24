@@ -30,6 +30,8 @@ public class UserForm {
     private byte[] image;
     private Set<PostForm> posts = new HashSet<>();
     private Set<CommentForm> comments = new HashSet<>();
+    private Set<UserForm> subscribers = new HashSet<>();
+    private Set<UserForm> subscriptions = new HashSet<>();
 
     public UserForm(User user){
 
@@ -58,6 +60,36 @@ public class UserForm {
             }
         }catch (LazyInitializationException e){
             this.comments=new HashSet<>();
+        }
+
+        try{
+            for(User subscriberUser: user.getSubscribers()){
+                UserForm userForm = new UserForm();
+                userForm.setId(subscriberUser.getID());
+                userForm.setUsername(subscriberUser.getUsername());
+                userForm.setPassword(subscriberUser.getPassword());
+                userForm.setEmail(subscriberUser.getEmail());
+                userForm.setRole(subscriberUser.getRole());
+                userForm.setImage(subscriberUser.getImage());
+                this.subscribers.add(userForm);
+            }
+        }catch (LazyInitializationException e){
+            this.subscribers=new HashSet<>();
+        }
+
+        try{
+            for(User subscriptionUser: user.getSubscriptions()){
+                UserForm userForm = new UserForm();
+                userForm.setId(subscriptionUser.getID());
+                userForm.setUsername(subscriptionUser.getUsername());
+                userForm.setPassword(subscriptionUser.getPassword());
+                userForm.setEmail(subscriptionUser.getEmail());
+                userForm.setRole(subscriptionUser.getRole());
+                userForm.setImage(subscriptionUser.getImage());
+                this.subscriptions.add(userForm);
+            }
+        }catch (LazyInitializationException e){
+            this.subscriptions=new HashSet<>();
         }
 
     }

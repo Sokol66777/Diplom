@@ -130,12 +130,50 @@ public class UserController {
         if(loggedUser.getId()==idFriendUser){
             response.sendRedirect(request.getContextPath()+"/user/welcome");
         }
-
         UserForm friendUserForm = userFasad.get(idFriendUser);
+        boolean isSubscribe = false;
+
+        for(UserForm userForm: loggedUser.getSubscriptions()){
+            if(userForm.getId()==idFriendUser){
+                isSubscribe=true;
+                break;
+            }
+        }
+
         ModelAndView modelAndView = new ModelAndView("friendUser");
+        modelAndView.addObject("isSubscribe",isSubscribe);
         modelAndView.addObject("friendUser",friendUserForm);
         return modelAndView;
 
+    }
+
+    @GetMapping("/subscribe")
+    public void subscribe(@RequestParam ("idChanel") long idChanel, @RequestParam("idUser") long idUser,
+                                  HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+
+        try {
+            userFasad.subscribe(idChanel,idUser);
+            UserForm currentUser = userFasad.get(idUser);
+            request.getSession().setAttribute("user",currentUser);
+            response.sendRedirect(request.getContextPath()+"/user/friendUser?idFriendUser="+idChanel);
+        } catch (LogicException e) {
+            response.sendRedirect(request.getContextPath()+"/user/friendUser?idFriendUser="+idChanel);
+        }
+    }
+
+    @GetMapping("/unsubscribe")
+    public void unsubscribe(@RequestParam ("idChanel") long idChanel, @RequestParam("idUser") long idUser,
+                            HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        try {
+            userFasad.unsubscribe(idChanel,idUser);
+            UserForm currentUser = userFasad.get(idUser);
+            request.getSession().setAttribute("user",currentUser);
+            response.sendRedirect(request.getContextPath()+"/user/friendUser?idFriendUser="+idChanel);
+        } catch (LogicException e) {
+            response.sendRedirect(request.getContextPath()+"/user/friendUser?idFriendUser="+idChanel);
+        }
     }
 
     @PostMapping(value = {"/uploadPhoto"})

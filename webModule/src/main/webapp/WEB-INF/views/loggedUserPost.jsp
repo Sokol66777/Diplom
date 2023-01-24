@@ -5,11 +5,13 @@
 
 <html>
 <head>
-        <h2>My posts</h2>
+
     </head>
     <body>
-        <button onclick = "location.href='${pageContext.request.contextPath}/user/welcome'">welcome</button>
-        <button onclick = "location.href='${pageContext.request.contextPath}/post/add'">Add post</button>
+        <p><button onclick = "location.href='${pageContext.request.contextPath}/user/welcome'">welcome</button>
+        <button onclick = "location.href='${pageContext.request.contextPath}/post/add'">Add post</button></p>
+        <p><h2>My posts</h2></p>
+
 
         <table>
             <c:forEach var="post" items = "${myPosts}">

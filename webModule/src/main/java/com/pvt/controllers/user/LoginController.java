@@ -6,6 +6,8 @@ import com.pvt.fasad.PostFasad;
 import com.pvt.fasad.UserFasad;
 import com.pvt.forms.PostForm;
 import com.pvt.forms.UserForm;
+import com.pvt.jar.entity.User;
+import com.pvt.jar.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -31,11 +33,13 @@ public class LoginController {
     @Autowired
     PostFasad postFasad;
 
+    @Autowired
+    UserService userService;
+
     @RequestMapping(value = {"/"})
     public ModelAndView startApp(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        ModelAndView modelAndView = new ModelAndView("startPage");
-        return modelAndView;
+        return new ModelAndView("startPage");
     }
 
     @PostMapping(value = {"/loginS"})
@@ -43,7 +47,6 @@ public class LoginController {
 
         UserForm user;
         ModelAndView modelAndView;
-
 
         user=userFasad.getByUsername(loginForm.getUsername());
         List<PostForm> allPosts = postFasad.findAllOrderByCreateDateDesc();

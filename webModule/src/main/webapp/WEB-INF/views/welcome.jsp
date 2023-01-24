@@ -31,7 +31,7 @@
         <table>
 
                 <tr>
-                    <td><a href="/user/friendUser?idFriendUser=${post.idUser}"><c:out value="${post.username}"/></a></td>
+                    <td><a href="${pageContext.request.contextPath}/user/friendUser?idFriendUser=${post.idUser}"><c:out value="${post.username}"/></a></td>
                     <td><c:out value = "${post.name}"/></td>
                 </tr>
                 <tr>

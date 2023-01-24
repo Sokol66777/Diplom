@@ -19,6 +19,7 @@ public class CommentForm {
     private long idUser;
     private long idPost;
     private Date createDate;
+    private Date updateDate;
 
 
     public CommentForm(Comment comment){
@@ -29,6 +30,7 @@ public class CommentForm {
         this.idPost=comment.getPost().getID();
         this.username=comment.getUser().getUsername();
         this.createDate=comment.getCreateDate();
+        this.updateDate=comment.getUpdateDate();
     }
 
 }

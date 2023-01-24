@@ -36,24 +36,20 @@ public class UserFasad {
         user.setPassword(userForm.getPassword());
         user.setImage(userForm.getImage());
 
-        Set<Comment> comments = new HashSet<>();
-        for (CommentForm commentForm: userForm.getComments()){
-            Comment comment = new Comment();
-            comment.setID(commentForm.getId());
-            comment.setText(commentForm.getText());
-            comment.setName(commentForm.getName());
-            comments.add(comment);
+        Set<User> subscribers = new HashSet<>();
+        for(UserForm subscriberUserForm:userForm.getSubscribers()){
+            User subscriber = userService.get(subscriberUserForm.getId());
+            subscribers.add(subscriber);
         }
+        user.setSubscribers(subscribers);
 
-        Set<Post> posts = new HashSet<>();
-        for(PostForm postForm: userForm.getPosts()){
-            Post post = new Post();
-            post.setID(postForm.getId());
-            post.setName(postForm.getName());
-            post.setText(postForm.getText());
-            post.setImage(postForm.getImage());
-            posts.add(post);
+        Set<User> subscriptions = new HashSet<>();
+        for(UserForm subscriptionUserForm:userForm.getSubscriptions()){
+            User subscription = userService.get(subscriptionUserForm.getId());
+            subscriptions.add(subscription);
         }
+        user.setSubscriptions(subscriptions);
+
         return user;
     }
 
@@ -63,8 +59,7 @@ public class UserFasad {
 
     public UserForm get(long id){
 
-        UserForm userForm = new UserForm(userService.get(id));
-        return userForm;
+        return new UserForm(userService.get(id));
     }
 
     public void update(UserForm userForm) throws LogicException {
@@ -108,6 +103,26 @@ public class UserFasad {
         }
 
         return userForm;
+    }
+
+    public void subscribe(long idChanel, long idUser) throws LogicException {
+
+        User user = userService.get(idUser);
+        User chanel = userService.get(idChanel);
+        Set<User> subscriptions = user.getSubscriptions();
+        subscriptions.add(chanel);
+        user.setSubscriptions(subscriptions);
+        userService.modify(user);
+    }
+
+    public void unsubscribe(long idChanel, long idUser) throws LogicException {
+
+        User user = userService.get(idUser);
+        User chanel = userService.get(idChanel);
+        Set<User> subscriptions = user.getSubscriptions();
+        subscriptions.remove(chanel);
+        user.setSubscriptions(subscriptions);
+        userService.modify(user);
     }
 
     public List<UserForm> getAllUsers(){
