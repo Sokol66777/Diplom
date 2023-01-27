@@ -5,8 +5,10 @@ import com.pvt.fasad.UserFasad;
 import com.pvt.forms.PostForm;
 import com.pvt.forms.UserForm;
 import com.pvt.jar.entity.Post;
+import com.pvt.jar.entity.SubscribeRequest;
 import com.pvt.jar.entity.User;
 import com.pvt.jar.exceptions.LogicException;
+import com.pvt.jar.services.SubscribeRequestService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,9 @@ public class UserController {
 
     @Autowired
     PostFasad postFasad;
+
+    @Autowired
+    SubscribeRequestService subscribeRequestService;
 
     @GetMapping("/welcome")
     public ModelAndView welcome(@PageableDefault(size = 3,sort = {"ID"},direction = Sort.Direction.DESC) Pageable pageable){
@@ -155,19 +160,27 @@ public class UserController {
 
     }
 
-    @GetMapping("/subscribe")
-    public void subscribe(@RequestParam ("idChanel") long idChanel, @RequestParam("idUser") long idUser,
-                                  HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @PostMapping("/subscribe")
+    public void subscribe(@ModelAttribute("subRequest")SubscribeRequest subscribeRequest,
+                          HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+        if(subscribeRequest.isStatus()){
+            try {
+                userFasad.subscribe(subscribeRequest.getIdChanel(),subscribeRequest.getIdSubscriber());
+                UserForm currentUser = userFasad.get(subscribeRequest.getIdChanel());
+                request.getSession().setAttribute("user",currentUser);
+                subscribeRequestService.delete(subscribeRequest.getId());
+                response.sendRedirect(request.getContextPath()+"/subscribeRequest/currentUserNotifications?idUser="+subscribeRequest.getIdChanel());
+            } catch (LogicException e) {
+                response.sendRedirect(request.getContextPath()+"/subscribeRequest/currentUserNotifications?idUser="+subscribeRequest.getIdChanel());
+            }
+        }else {
+            subscribeRequestService.delete(subscribeRequest.getId());
+            response.sendRedirect(request.getContextPath()+"/subscribeRequest/currentUserNotifications?idUser="+subscribeRequest.getIdChanel());
 
-        try {
-            userFasad.subscribe(idChanel,idUser);
-            UserForm currentUser = userFasad.get(idUser);
-            request.getSession().setAttribute("user",currentUser);
-            response.sendRedirect(request.getContextPath()+"/user/friendUser?idFriendUser="+idChanel);
-        } catch (LogicException e) {
-            response.sendRedirect(request.getContextPath()+"/user/friendUser?idFriendUser="+idChanel);
         }
+
+
     }
 
     @GetMapping("/unsubscribe")

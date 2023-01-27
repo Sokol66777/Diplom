@@ -20,6 +20,8 @@
     <button onclick = "location.href='${pageContext.request.contextPath}/user/update?updateUsersID=${user.id}'">Update</button>
     <button onclick = "location.href='${pageContext.request.contextPath}/post/myPosts?idUserPost=${user.id}'"> My posts </button>
     <button onclick = "location.href='${pageContext.request.contextPath}/user/preSearchUser'">Search User</button>
+    <p></p>
+    <button onclick = "location.href='${pageContext.request.contextPath}/subscribeRequest/currentUserNotifications?idUser=${user.id}'">My notifications</button>
 
 
     <security:authorize access = "hasRole('ROLE_admin')">
