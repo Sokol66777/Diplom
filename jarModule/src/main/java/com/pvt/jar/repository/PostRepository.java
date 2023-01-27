@@ -25,5 +25,4 @@ public interface PostRepository extends BaseRepository<Post,Long>{
 
     @Query("select p from Post as p where p.user.id=?1 and p.hide=false")
     Page<Post> findByIdUserAndHideFalse(long idUser,Pageable pageable);
-
 }

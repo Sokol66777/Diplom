@@ -5,6 +5,7 @@ import com.pvt.fasad.UserFasad;
 import com.pvt.forms.PostForm;
 import com.pvt.forms.UserForm;
 import com.pvt.jar.entity.Post;
+import com.pvt.jar.entity.User;
 import com.pvt.jar.exceptions.LogicException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -214,7 +215,7 @@ public class UserController {
     @GetMapping(value = {"/viewImage"})
     public void viewImage(HttpServletRequest request, HttpServletResponse response) throws IOException {
         UserForm imageForm = (UserForm) request.getSession().getAttribute("imageForm");
-        if(imageForm.getImage()!=null) {
+        if(imageForm!=null && imageForm.getImage()!=null) {
 
             response.setContentType("image/jpg");
             response.getOutputStream().write(imageForm.getImage());
@@ -232,6 +233,24 @@ public class UserController {
             response.getOutputStream().write(userForm.getImage());
         }
         response.getOutputStream().close();
+    }
+
+    @GetMapping(value = {"/preSearchUser"})
+    public ModelAndView redirectToSearchUser(){
+
+        ModelAndView modelAndView = new ModelAndView("searchUser");
+        return modelAndView;
+    }
+
+    @PostMapping(value = {"/searchUser"})
+    public ModelAndView searchUser(@RequestParam("username")String username,
+                                   @PageableDefault(size = 3,sort = {"ID"},direction = Sort.Direction.DESC) Pageable pageable){
+
+        ModelAndView modelAndView = new ModelAndView("searchUser");
+        Page<User> findUsers = userFasad.findByUsernameLike(username,pageable);
+        modelAndView.addObject("findUsers",findUsers.getContent());
+        modelAndView.addObject("totalPages",findUsers.getTotalPages());
+        return modelAndView;
     }
 
 }

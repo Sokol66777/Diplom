@@ -51,7 +51,8 @@ public class RegistrationController {
                     request.getSession().removeAttribute("imageForm");
                 }
                 userFasad.addUser(registrationForm);
-                response.sendRedirect("/user/welcome");
+                response.sendRedirect(request.getContextPath()+"/user/welcome");
+
             } catch (LogicException e) {
 
                 modelAndView = new ModelAndView("addUser");

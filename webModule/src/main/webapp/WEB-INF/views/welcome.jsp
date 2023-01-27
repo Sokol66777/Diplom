@@ -19,6 +19,8 @@
     <button onclick = "location.href='${pageContext.request.contextPath}/user/logout'"> logout </button>
     <button onclick = "location.href='${pageContext.request.contextPath}/user/update?updateUsersID=${user.id}'">Update</button>
     <button onclick = "location.href='${pageContext.request.contextPath}/post/myPosts?idUserPost=${user.id}'"> My posts </button>
+    <button onclick = "location.href='${pageContext.request.contextPath}/user/preSearchUser'">Search User</button>
+
 
     <security:authorize access = "hasRole('ROLE_admin')">
        <button onclick = "location.href='${pageContext.request.contextPath}/user/allUsers?adminName=${user.username}'">All users</button>

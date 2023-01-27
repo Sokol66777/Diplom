@@ -10,6 +10,8 @@ import com.pvt.jar.exceptions.LogicException;
 import com.pvt.jar.exceptions.UserLogicException;
 import com.pvt.jar.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 
@@ -133,5 +135,10 @@ public class UserFasad {
             userForms.add(new UserForm(user));
         }
         return userForms;
+    }
+
+    public Page<User> findByUsernameLike(String username, Pageable pageable){
+
+        return userService.findByUsernameLike(username,pageable);
     }
 }
