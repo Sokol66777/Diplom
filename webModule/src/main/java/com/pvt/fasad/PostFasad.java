@@ -8,6 +8,8 @@ import com.pvt.jar.exceptions.LogicException;
 import com.pvt.jar.services.PostService;
 import com.pvt.jar.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -70,16 +72,15 @@ public class PostFasad {
         postService.modify(buildPost(postForm));
     }
 
-    public List<PostForm> findPostsByIdUser(long idUser){
+    public Page<Post> findPostsByIdUser(long idUser,Pageable pageable){
 
-        List<PostForm> postForms = new ArrayList<>();
-        List<Post> posts = postService.findPostsByIdUser(idUser);
 
-        for(Post post: posts){
-            postForms.add(new PostForm(post));
-        }
+        return postService.findPostsByIdUser(idUser,pageable);
+    }
 
-        return postForms;
+    public Page<Post> findByIdUserAndHideFalse(long idUser,Pageable pageable){
+
+        return postService.findByIdUserAndHideFalse(idUser,pageable);
     }
 
     public List<PostForm> findAll(){
@@ -103,4 +104,16 @@ public class PostFasad {
         }
         return postForms;
     }
+
+    public Page<Post> findAllWithPagination(Pageable pageable){
+
+
+        return postService.findAll(pageable);
+    }
+
+    public  Page<Post> findByHideFalse(Pageable pageable){
+
+        return postService.findByHideFalse(pageable);
+    }
+
 }

@@ -31,13 +31,13 @@
         <table>
 
                 <tr>
-                    <td><a href="${pageContext.request.contextPath}/user/friendUser?idFriendUser=${post.idUser}"><c:out value="${post.username}"/></a></td>
+                    <td><a href="${pageContext.request.contextPath}/user/friendUser?idFriendUser=${post.user.ID}"><c:out value="${post.user.username}"/></a></td>
                     <td><c:out value = "${post.name}"/></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td><c:if test="${not empty post.image }">
-                        <p><img src="${pageContext.request.contextPath}/post/viewPostImage?idPost=${post.id}" width="100"/></p>
+                        <p><img src="${pageContext.request.contextPath}/post/viewPostImage?idPost=${post.ID}" width="100"/></p>
                     </c:if></td>
                 </tr>
                 <tr>
@@ -45,11 +45,19 @@
                     <td><c:out value = "${post.text}"/> </td>
                 </tr>
                 <tr>
-                    <td><a href="/comment/commentsOfPost?idPost=${post.id}">comments</a> <br><br></td>
+                    <td><a href="/comment/commentsOfPost?idPost=${post.ID}">comments</a> <br><br></td>
                 </tr>
         </table>
     </c:if>
 </c:forEach>
+
+<c:if test="${totalPages>0}">
+    <ul>
+        <c:forEach begin="0" end ="${totalPages-1}" var="page">
+                <a href="${pageContext.request.contextPath}/user/welcome?page=${page}"><c:out value="${page+1}" /></a>
+      </c:forEach>
+    </ul>
+</c:if>
 
 </body>
 </html>

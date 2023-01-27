@@ -10,7 +10,9 @@
 <body>
     <p><c:out value="${errorMassage}"/></p>
     <p><c:out value="${friendUser.username}"/></p>
-    <p><img src="${pageContext.request.contextPath}/user/imageOnWelcomePage?idUser=${friendUser.id}" width="100"/></p>
+    <c:if test="${not empty user.image }">
+        <p><img src="${pageContext.request.contextPath}/user/imageOnWelcomePage?idUser=${friendUser.id}" width="100"/></p>
+    </c:if>
 
     <p></p>
     <c:if test = "${isSubscribe=='true'}">
