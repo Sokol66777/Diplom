@@ -4,10 +4,15 @@ import com.pvt.fasad.PostFasad;
 import com.pvt.fasad.UserFasad;
 import com.pvt.forms.PostForm;
 import com.pvt.forms.UserForm;
+import com.pvt.jar.entity.Post;
 import com.pvt.jar.exceptions.LogicException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,11 +33,13 @@ public class UserController {
     PostFasad postFasad;
 
     @GetMapping("/welcome")
-    public ModelAndView welcome(){
+    public ModelAndView welcome(@PageableDefault(size = 3,sort = {"ID"},direction = Sort.Direction.DESC) Pageable pageable){
 
-        List<PostForm> allPosts = postFasad.findAllOrderByCreateDateDesc();
+        Page<Post> allPosts = postFasad.findByHideFalse(pageable);
         ModelAndView modelAndView = new ModelAndView("welcome");
-        modelAndView.addObject("allPosts",allPosts);
+        modelAndView.addObject("allPosts",allPosts.getContent());
+        modelAndView.addObject("totalPages",allPosts.getTotalPages());
+
         return modelAndView;
     }
 

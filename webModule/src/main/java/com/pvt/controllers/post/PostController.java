@@ -4,10 +4,15 @@ import com.pvt.fasad.PostFasad;
 import com.pvt.fasad.UserFasad;
 import com.pvt.forms.PostForm;
 import com.pvt.forms.UserForm;
+import com.pvt.jar.entity.Post;
 import com.pvt.jar.exceptions.LogicException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,20 +31,33 @@ public class PostController {
     UserFasad userFasad;
 
     @GetMapping("/myPosts")
-    public ModelAndView myPosts(@ModelAttribute("idUserPost") long idUser){
+    public ModelAndView myPosts(@ModelAttribute("idUserPost") long idUser,
+                                @PageableDefault(size = 3,sort = {"ID"},direction = Sort.Direction.DESC) Pageable pageable){
 
-        List<PostForm> postForms = postFasad.findPostsByIdUser(idUser);
+        Page<Post> posts = postFasad.findPostsByIdUser(idUser,pageable);
         ModelAndView modelAndView = new ModelAndView("loggedUserPost");
-        modelAndView.addObject("myPosts",postForms);
+        modelAndView.addObject("myPosts",posts.getContent());
+        modelAndView.addObject("totalPages",posts.getTotalPages());
         return modelAndView;
     }
 
     @GetMapping("/postsOfFriend")
-    public ModelAndView postsOfFriend(@RequestParam("idFriendUser") long idFriendUser){
+    public ModelAndView postsOfFriend(@RequestParam("idFriendUser") long idFriendUser, HttpServletRequest request,
+                                      @PageableDefault(size = 3,sort = {"ID"},direction = Sort.Direction.DESC) Pageable pageable){
 
-        List<PostForm> postForms = postFasad.findPostsByIdUser(idFriendUser);
+        Page<Post> posts;
+        UserForm userForm = (UserForm)request.getSession().getAttribute("user");
+
+        if(userForm.getRole().equals("admin")){
+            posts = postFasad.findPostsByIdUser(idFriendUser,pageable);
+        }else {
+            posts = postFasad.findByIdUserAndHideFalse(idFriendUser, pageable);
+        }
+
         ModelAndView modelAndView = new ModelAndView("postsOfFriend");
-        modelAndView.addObject("postsOfFriend",postForms);
+        modelAndView.addObject("postsOfFriend",posts.getContent());
+        modelAndView.addObject("totalPages",posts.getTotalPages());
+        modelAndView.addObject("idFriendUser",idFriendUser);
         modelAndView.addObject("usernameOfFriend",userFasad.get(idFriendUser).getUsername());
         return modelAndView;
     }

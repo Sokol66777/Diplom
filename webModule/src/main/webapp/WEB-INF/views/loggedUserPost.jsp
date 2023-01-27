@@ -18,21 +18,29 @@
                     <tr>
                         <td><c:out value = "${post.name}"/></td>
 
-                        <td><button onclick = "location.href='${pageContext.request.contextPath}/post/delete?idPost=${post.id}'">Delete post</button><td>
-                        <td><button onclick = "location.href='${pageContext.request.contextPath}/post/update?idPost=${post.id}'">Update post</button><td>
+                        <td><button onclick = "location.href='${pageContext.request.contextPath}/post/delete?idPost=${post.ID}'">Delete post</button><td>
+                        <td><button onclick = "location.href='${pageContext.request.contextPath}/post/update?idPost=${post.ID}'">Update post</button><td>
                     </tr>
                     <tr>
                         <td><c:if test="${not empty post.image }">
-                            <p><img src="${pageContext.request.contextPath}/post/viewPostImage?idPost=${post.id}" width="100"/></p>
+                            <p><img src="${pageContext.request.contextPath}/post/viewPostImage?idPost=${post.ID}" width="100"/></p>
                         </c:if></td>
                     </tr>
                     <tr>
                         <td><c:out value = "${post.text}"/></td>
                     </tr>
                     <tr>
-                        <td><a href="/comment/commentsOfPost?idPost=${post.id}">comments</a> <br><br></td>
+                        <td><a href="/comment/commentsOfPost?idPost=${post.ID}">comments</a> <br><br></td>
                     </tr>
             </c:forEach>
         </table>
+
+        <c:if test="${totalPages>0}">
+            <ul>
+                <c:forEach begin="0" end ="${totalPages-1}" var="page">
+                        <a href="${pageContext.request.contextPath}/post/myPosts?page=${page}&idUserPost=${user.id}"><c:out value="${page+1}"/></a>
+                </c:forEach>
+            </ul>
+        </c:if>
     </body>
 </html>
