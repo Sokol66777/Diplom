@@ -25,3 +25,6 @@
 
     <button onclick = "location.href='${pageContext.request.contextPath}/user/welcome'"> welcome page </button>
     <button onclick = "location.href='${pageContext.request.contextPath}/post/postsOfFriend?idFriendUser=${friendUser.id}'"> Posts </button>
+
+</body>
+</html>
