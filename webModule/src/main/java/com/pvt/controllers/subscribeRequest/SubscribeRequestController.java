@@ -24,13 +24,13 @@ import org.springframework.web.servlet.ModelAndView;
 public class SubscribeRequestController {
 
     @Autowired
-    SubscribeRequestService subscribeRequestService;
+    private SubscribeRequestService subscribeRequestService;
 
     @Autowired
-    UserFasad userFasad;
+    private UserFasad userFasad;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
 
 

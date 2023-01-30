@@ -22,7 +22,7 @@ import java.io.IOException;
 public class RegistrationController {
 
     @Autowired
-    UserFasad userFasad;
+    private UserFasad userFasad;
 
     @GetMapping
     public ModelAndView redirectToRegistration(){

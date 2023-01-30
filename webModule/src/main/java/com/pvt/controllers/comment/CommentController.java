@@ -20,10 +20,10 @@ import java.util.List;
 public class CommentController {
 
     @Autowired
-    CommentFasad commentFasad;
+    private CommentFasad commentFasad;
 
     @Autowired
-    PostFasad postFasad;
+    private PostFasad postFasad;
 
     @GetMapping("/commentsOfPost")
     public ModelAndView commentsOfPost(@RequestParam("idPost") long idPost){

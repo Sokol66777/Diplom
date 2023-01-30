@@ -18,10 +18,10 @@ import java.io.IOException;
 public class ResetForgottenPasswordController {
 
     @Autowired
-    UserFasad userFasad;
+    private UserFasad userFasad;
 
     @Autowired
-    EmailService emailService;
+    private EmailService emailService;
 
 
     @GetMapping

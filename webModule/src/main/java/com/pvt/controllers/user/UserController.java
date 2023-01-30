@@ -30,13 +30,13 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    UserFasad userFasad;
+    private UserFasad userFasad;
 
     @Autowired
-    PostFasad postFasad;
+    private PostFasad postFasad;
 
     @Autowired
-    SubscribeRequestService subscribeRequestService;
+    private SubscribeRequestService subscribeRequestService;
 
     @GetMapping("/welcome")
     public ModelAndView welcome(@PageableDefault(size = 3,sort = {"ID"},direction = Sort.Direction.DESC) Pageable pageable){

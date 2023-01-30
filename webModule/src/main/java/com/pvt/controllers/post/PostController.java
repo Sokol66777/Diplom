@@ -25,10 +25,10 @@ import java.io.IOException;
 public class PostController {
 
     @Autowired
-    PostFasad postFasad;
+    private PostFasad postFasad;
 
     @Autowired
-    UserFasad userFasad;
+    private UserFasad userFasad;
 
     @GetMapping("/myPosts")
     public ModelAndView myPosts(@ModelAttribute("idUserPost") long idUser,

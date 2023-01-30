@@ -32,14 +32,14 @@ import java.util.List;
 public class LoginController {
 
     @Autowired
-    UserFasad userFasad;
+    private UserFasad userFasad;
 
 
     @Autowired
-    PostFasad postFasad;
+    private PostFasad postFasad;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @RequestMapping(value = {"/"})
     public ModelAndView startApp(HttpServletRequest request, HttpServletResponse response) throws IOException {
