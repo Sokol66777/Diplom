@@ -35,9 +35,10 @@ public class SecurityConfiguration {
     public SecurityFilterChain formLoginFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf().disable()
-                .authorizeHttpRequests(authorize->authorize.requestMatchers("/","/addUser").permitAll()
+                .authorizeHttpRequests(authorize->authorize.requestMatchers("/","/addUser","/resetPassword/**","/user/uploadPhoto"
+                                ,"/user/viewImage","/user/imageOnWelcomePage").permitAll()
                         .requestMatchers("/user/allUsers").hasAnyRole("admin")
-                        .requestMatchers("/user/welcome").authenticated()
+                        .requestMatchers("/user/**","/post/**","/comment/**","/subscribeRequest/**").authenticated()
                         .anyRequest().permitAll())
                 .formLogin()
                 .successForwardUrl("/loginS");
