@@ -97,9 +97,7 @@ public class UserForm {
     @Override
     public String toString() {
         return
-                "id=" + id +
-                        ", username=" + username +
-                        ", password=" + password +
+                        "username=" + username +
                         ", email=" + email +
                         ", role=" + role  ;
     }

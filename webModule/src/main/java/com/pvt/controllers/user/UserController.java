@@ -62,7 +62,7 @@ public class UserController {
 
         UserForm adminForm =(UserForm) request.getSession().getAttribute("user");
         List<UserForm> trueUsers = new ArrayList<>();
-        List<UserForm> userForms = null;
+        List<UserForm> userForms;
         userForms = userFasad.getAllUsers();
 
         if(userForms!=null) {
