@@ -16,4 +16,6 @@ public interface UserService extends IService<User,Long>{
 
     Page<User> findByUsernameLike(String username, Pageable pageable);
 
+    Page<User> findByIDNot(long id, Pageable pageable);
+
 }

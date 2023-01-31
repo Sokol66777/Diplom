@@ -141,4 +141,10 @@ public class UserFasad {
 
         return userService.findByUsernameLike(username,pageable);
     }
+
+    public Page<User> findByIdNot(long id, Pageable pageable){
+
+        return userService.findByIDNot(id,pageable);
+    }
+
 }

@@ -36,6 +36,7 @@ public class BaseService<T,ID> implements IService<T, ID>{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public T get(ID id) {
 
         return baseRepository.findById(id).orElse(null);

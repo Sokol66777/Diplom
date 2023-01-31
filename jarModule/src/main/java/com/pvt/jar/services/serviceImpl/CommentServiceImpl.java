@@ -18,18 +18,21 @@ public class CommentServiceImpl extends BaseService<Comment,Long> implements Com
     private CommentRepository commentRepositoryService;
 
     @Override
+    @Transactional(readOnly = true)
     public List<Comment> getAll() {
 
         return commentRepositoryService.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Comment getByName(String name) {
 
         return commentRepositoryService.findByName(name).orElse(null);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Comment> findByIdPost(long idPost) {
 
         return commentRepositoryService.findByIdPost(idPost);

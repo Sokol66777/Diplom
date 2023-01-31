@@ -2,7 +2,6 @@ package com.pvt.controllers.user;
 
 import com.pvt.fasad.PostFasad;
 import com.pvt.fasad.UserFasad;
-import com.pvt.forms.PostForm;
 import com.pvt.forms.UserForm;
 import com.pvt.jar.entity.Post;
 import com.pvt.jar.entity.SubscribeRequest;
@@ -58,22 +57,16 @@ public class UserController {
     }
 
     @GetMapping(value = {"/allUsers"})
-    public ModelAndView allUsers(HttpServletRequest request,HttpServletResponse response) throws IOException {
+    public ModelAndView allUsers(HttpServletRequest request,HttpServletResponse response,
+                                 @PageableDefault(size = 3,sort = {"ID"},direction = Sort.Direction.DESC) Pageable pageable) throws IOException {
 
         UserForm adminForm =(UserForm) request.getSession().getAttribute("user");
-        List<UserForm> trueUsers = new ArrayList<>();
-        List<UserForm> userForms;
-        userForms = userFasad.getAllUsers();
 
-        if(userForms!=null) {
-            for (UserForm user : userForms) {
-                if (user.getId()!=adminForm.getId()) {
-                    trueUsers.add(user);
-                }
-            }
-        }
+        Page<User> users= userFasad.findByIdNot(adminForm.getId(),pageable);
+
         ModelAndView modelAndView = new ModelAndView("users");
-        modelAndView.addObject("allUsers",trueUsers);
+        modelAndView.addObject("allUsers",users.getContent());
+        modelAndView.addObject("totalPages",users.getTotalPages());
         return modelAndView;
     }
     @GetMapping(value = {"/delete"})

@@ -21,27 +21,37 @@ public class UserServiceImpl extends BaseService<User,Long> implements UserServi
     private UserRepository userRepositoryService;
 
     @Override
+    @Transactional(readOnly = true)
     public List<User> getAllUsers() {
 
         return userRepositoryService.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User getByUsername(String username) {
 
         return userRepositoryService.findByUsername(username).orElse(null);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User getByEmail(String email) {
 
         return userRepositoryService.findByEmail(email).orElse(null);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<User> findByUsernameLike(String username, Pageable pageable) {
 
         return userRepositoryService.findByUsernameLike(username,pageable);
+    }
+
+    @Override
+    public Page<User> findByIDNot(long id,Pageable pageable) {
+
+        return userRepositoryService.findByIDNot(id, pageable);
     }
 
 

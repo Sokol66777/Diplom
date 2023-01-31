@@ -18,6 +18,7 @@ public class SubscribeRequestImpl extends BaseService<SubscribeRequest,Long> imp
     SubscribeRequestRepository subscribeRequestRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public Page<SubscribeRequest> findByIdChanel(long idChanel, Pageable pageable) {
 
 
