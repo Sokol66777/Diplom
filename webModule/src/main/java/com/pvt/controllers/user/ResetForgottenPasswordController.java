@@ -81,23 +81,18 @@ public class ResetForgottenPasswordController {
                                          HttpServletResponse response) throws IOException {
 
         ModelAndView modelAndView = new ModelAndView("inputResetPassword");
-        if(userForm.getPassword().equals(userForm.getConfirmedPassword())){
 
-            UserForm user = userFasad.getByUsername(userForm.getUsername());
-            user.setPassword(userForm.getPassword());
-            user.setNewPassword(userForm.getPassword());
-            try {
+        try {
 
-                userFasad.update(user);
-                response.sendRedirect(request.getContextPath()+"/user/welcome");
-            } catch (LogicException e) {
+            userFasad.setResetPassword(userForm);
+            response.sendRedirect(request.getContextPath()+"/user/welcome");
+        } catch (LogicException e) {
 
-
-                modelAndView.addObject("userForm",new UserForm());
-                modelAndView.addObject("username",userForm.getUsername());
-                modelAndView.addObject("errorMessage",e.getMessage());
-            }
+            modelAndView.addObject("userForm",new UserForm());
+            modelAndView.addObject("username",userForm.getUsername());
+            modelAndView.addObject("errorMessage",e.getMessage());
         }
+
         return modelAndView;
     }
 }

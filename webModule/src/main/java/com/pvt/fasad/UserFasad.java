@@ -147,4 +147,13 @@ public class UserFasad {
         return userService.findByIDNot(id,pageable);
     }
 
+    public void setResetPassword(UserForm userForm) throws LogicException {
+
+        if(userForm.getPassword().equals(userForm.getConfirmedPassword())){
+            UserForm user = getByUsername(userForm.getUsername());
+            user.setPassword(userForm.getPassword());
+            user.setNewPassword(userForm.getPassword());
+            update(user);
+        }
+    }
 }
