@@ -149,11 +149,23 @@ public class UserFasad {
 
     public void setResetPassword(UserForm userForm) throws LogicException {
 
+        UserForm user;
         if(userForm.getPassword().equals(userForm.getConfirmedPassword())){
-            UserForm user = getByUsername(userForm.getUsername());
+            user = getByUsername(userForm.getUsername());
             user.setPassword(userForm.getPassword());
-            user.setNewPassword(userForm.getPassword());
-            update(user);
+
+            try {
+                validationPassword(user.getPassword());
+            } catch (UserLogicException e) {
+                throw new LogicException(e.getMessage());
+            }
+
+            user.setPassword(BCrypt.hashpw(userForm.getPassword(), BCrypt.gensalt(10)));
+            userService.modify(buildUser(user));
+        } else {
+            throw new LogicException("password not confirmed");
         }
+
+
     }
 }
