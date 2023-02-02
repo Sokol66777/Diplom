@@ -2,21 +2,25 @@
 <%@ page language = "java" contentType= "text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 <head>
-    <h2>Reset password page</h2>
+    <link href="/css/login.css" rel="stylesheet">
+    <link href="/css/navBar.css" rel="stylesheet">
+    <title>Reset password</title>
 </head>
 <body>
-    <p><c:out value="${errorMessage}"/></p>
-    <form action="${pageContext.request.contextPath}/resetPassword" method="post">
-    	<table>
-			<tr>
-    			<td>Write your username and we will send code for reset password on email</td>
-        		<td><input type = "text" name="username" required="required"/></td>
-			</tr>
-        	<tr>
-        		<td><input type = "submit" value="OK"/></td>
-			</tr>
-		</table>
-	</form>
-    <button onclick = "location.href='${pageContext.request.contextPath}/user/logout'"> start page </button>
+    <ul class="navigation">
+        <li><a href="${pageContext.request.contextPath}/login" title="sing in">sign in</a></li>
+        <li><a href="${pageContext.request.contextPath}/addUser" title="sing up">sign up</a></li>
+        <li><a href="${pageContext.request.contextPath}/resetPassword" title="Forgot password">Forgot password</a></li>
+        <li><a href="" title="Contact">Contact</a></li>
+        <div class="clear"></div>
+      </ul>
+
+
+    <form class="login" action="${pageContext.request.contextPath}/resetPassword" method="post">
+        <h1 ><c:out value="${errorMessage}"/></h1>
+        <p>Write your username and we will send code for reset password on email</p>
+        <input type = "text" name="username" required="required"/>
+        <input type = "submit" value="OK"/>
+    </form>
 </body>
 </html>
