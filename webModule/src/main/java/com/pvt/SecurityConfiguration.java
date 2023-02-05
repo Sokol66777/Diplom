@@ -41,7 +41,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/user/**","/post/**","/comment/**","/subscribeRequest/**").authenticated()
                         .anyRequest().permitAll())
                 .formLogin()
-                .successForwardUrl("/loginS");
+                .successForwardUrl("/loginS?page=0");
 
         return http.build();
     }

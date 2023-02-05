@@ -44,6 +44,7 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView("welcome");
         modelAndView.addObject("allPosts",allPosts.getContent());
         modelAndView.addObject("totalPages",allPosts.getTotalPages());
+        modelAndView.addObject("currentPage",allPosts.getNumber());
 
         return modelAndView;
     }
