@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Controller
 @RequestMapping("/subscribeRequest")
 public class SubscribeRequestController {
@@ -59,9 +62,40 @@ public class SubscribeRequestController {
     @GetMapping("/currentUserNotifications")
     public ModelAndView currentUserNotifications(@RequestParam("idUser") long idChanel,
                                                  @PageableDefault(size = 3,sort = {"id"},direction = Sort.Direction.DESC) Pageable pageable){
-
+        Set<Integer> pages = new HashSet<>();
         Page<SubscribeRequest> subRequests = subscribeRequestService.findByIdChanel(idChanel,pageable);
         ModelAndView modelAndView = new ModelAndView("currentUserNotifications");
+        if(subRequests.getTotalPages()>6){
+            if(subRequests.getNumber()>3){
+                pages.add(0);
+                pages.add(-1);
+            }else{
+                pages.add(0);
+                pages.add(1);
+                pages.add(2);
+            }
+            if(subRequests.getNumber()>3 && (subRequests.getNumber()<(subRequests.getTotalPages()-2))){
+                pages.add(subRequests.getNumber()-2);
+                pages.add(subRequests.getNumber()-1);
+            }
+            if(subRequests.getNumber()>2 && (subRequests.getNumber()<(subRequests.getTotalPages()-3))){
+                pages.add(subRequests.getNumber());
+            }
+            if(subRequests.getNumber()>1 && (subRequests.getNumber()<(subRequests.getTotalPages()-4))){
+                pages.add(subRequests.getNumber()+1);
+                pages.add(subRequests.getNumber()+2);
+            }
+            if(subRequests.getNumber()<subRequests.getTotalPages()-4){
+                pages.add(-1);
+                pages.add(subRequests.getTotalPages());
+            }else{
+                pages.add(subRequests.getTotalPages()-3);
+                pages.add(subRequests.getTotalPages()-2);
+                pages.add(subRequests.getTotalPages()-1);
+            }
+            modelAndView.addObject("pages",pages);
+        }
+        modelAndView.addObject("currentPage", subRequests.getNumber());
         modelAndView.addObject("subRequests",subRequests.getContent());
         modelAndView.addObject("totalPages",subRequests.getTotalPages());
         return modelAndView;

@@ -32,6 +32,7 @@ public class Post implements Serializable {
     @Column(name = "name",nullable = false)
     private String name;
 
+    @Lob
     @Column(name = "text",nullable = false)
     private String text;
 

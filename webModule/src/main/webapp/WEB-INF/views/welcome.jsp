@@ -15,7 +15,7 @@
         <c:if test="${not empty user.image }">
             <li><img src="${pageContext.request.contextPath}/user/imageOnWelcomePage?idUser=${user.id}" class="avatar"/></li>
         </c:if>
-        <li><a href="" ><c:out value="${user.username}"/></a>
+        <li><a href="${pageContext.request.contextPath}/user/welcome" ><c:out value="${user.username}"/></a>
             <ul>
                 <li><a href="${pageContext.request.contextPath}/post/myPosts?idUserPost=${user.id}" title="My posts">My posts</a></li>
                 <li><a href="${pageContext.request.contextPath}/user/update?updateUsersID=${user.id}" title="Update">Update</a></li>

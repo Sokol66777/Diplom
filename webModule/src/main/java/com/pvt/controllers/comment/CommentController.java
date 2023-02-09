@@ -4,7 +4,11 @@ import com.pvt.fasad.CommentFasad;
 import com.pvt.fasad.PostFasad;
 import com.pvt.forms.CommentForm;
 import com.pvt.forms.PostForm;
+import com.pvt.jar.entity.Comment;
+import com.pvt.jar.entity.Post;
 import com.pvt.jar.exceptions.LogicException;
+import com.pvt.jar.services.CommentService;
+import com.pvt.jar.services.PostService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +29,21 @@ public class CommentController {
     @Autowired
     private PostFasad postFasad;
 
+    @Autowired
+    private PostService postService;
+
+    @Autowired
+    private CommentService commentService;
+
     @GetMapping("/commentsOfPost")
     public ModelAndView commentsOfPost(@RequestParam("idPost") long idPost){
 
-        PostForm postForm = postFasad.get(idPost);
-        List<CommentForm> commentForms = commentFasad.findByIdPost(idPost);
+        Post post = postService.get(idPost);
+        List<Comment> comments = commentService.findByIdPost(idPost);
 
         ModelAndView modelAndView = new ModelAndView("commentsOfPost");
-        modelAndView.addObject("comments",commentForms);
-        modelAndView.addObject("post",postForm);
+        modelAndView.addObject("comments",comments);
+        modelAndView.addObject("post",post);
         modelAndView.addObject("newComment",new CommentForm());
 
         return modelAndView;
